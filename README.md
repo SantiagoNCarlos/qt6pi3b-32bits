@@ -4,7 +4,7 @@
 
 This is a guide for cross-compiling Qt 6 for Raspberry Pi 3B+ (32-bit OS). For a 64-bit cross compiling, check out [[1]](https://github.com/kevin-strobel/qt6pi3b).
 This is a direct modification of [[1]](https://github.com/kevin-strobel/qt6pi3b), done by @kevin-strobel. I've just made some modifications and after a few tries it works!
-At the bottom I include a few steps on how to cross compile your project easily.
+At the bottom I include a few steps on how to cross compile your project easily in case you're using qmake.
 
 ## Build
 
