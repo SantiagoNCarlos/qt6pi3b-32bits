@@ -2,8 +2,8 @@
 
 ## Preface
 
-This is a guide for cross-compiling Qt 6 for Raspberry Pi 3B+ (32-bit OS). For a 64-bit cross compiling, check out [1].
-This is a direct modification of [1], done by @kevin-strobel. I've just made some modifications and after a few tries it works!
+This is a guide for cross-compiling Qt 6 for Raspberry Pi 3B+ (32-bit OS). For a 64-bit cross compiling, check out [[1]](https://github.com/kevin-strobel/qt6pi3b).
+This is a direct modification of [[1]](https://github.com/kevin-strobel/qt6pi3b), done by @kevin-strobel. I've just made some modifications and after a few tries it works!
 At the bottom I include a few steps on how to cross compile your project easily.
 
 ## Build
@@ -46,11 +46,11 @@ Then,
   From there, simply execute `~/copyQtToRPi.sh <RPI username> <RPI IP address>`
   to copy the Qt files to your Raspberry Pi.
 
-Inside the Docker container, the Qt host installation is located at **~/qt-host**, the Qt target installation at **~/qt-raspi** (see [1]).
+Inside the Docker container, the Qt host installation is located at **~/qt-host**, the Qt target installation at **~/qt-raspi** (see [[1]](https://github.com/kevin-strobel/qt6pi3b)).
 
 ## Cross-compiling your Qt project for the Raspberry Pi 3B+ with qmake (32-bit)
 
-I used qmake for the cross compilation, so I do not know exactly how to cross compile using cmake, but you should find information about it in [2] and [3]. 
+I used qmake for the cross compilation, so I do not know exactly how to cross compile using cmake, but you should find information about it in [[2]](https://github.com/PhysicsX/QTonRaspberryPi/blob/main/README.md) and [[3]](https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi). 
 
 Once you generated the docker image and copied the Qt files to your raspberry pi, you can cross compile your Qt project. 
  - First, you need to run a docker container from the Docker image you created before (in case you exit after copying Qt) with `docker run -it --rm qtpi/qtpi:1.0`
