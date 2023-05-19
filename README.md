@@ -1,11 +1,10 @@
-# Cross-compiling Qt 6 for the Raspberry Pi 3B (64-bit)
+# Cross-compiling Qt 6 for the Raspberry Pi 3B+ (32-bit)
 
 ## Preface
 
-This is a guide for cross-compiling Qt 6 for Raspberry Pi 3B (64-bit OS).
-To have a clean, defined, and reliable environment, I build Qt 6 using Docker. However, the build worked for me in a Virtual Machine, too. Just be sure to use a **Ubuntu 20.04 LTS (Focal Fossa)** VM if you don't use Docker since the build will fail with the latest Ubuntu version.
-
-This guide is heavily inspired by [1] and [2].
+This is a guide for cross-compiling Qt 6 for Raspberry Pi 3B+ (32-bit OS). For a 64-bit cross compiling, check out [1].
+This is a direct modification of [1], done by @kevin-strobel. I've just made some modifications and after a few tries it works!
+At the bottom I include a few steps on how to cross compile your project easily.
 
 ## Build
 
@@ -13,7 +12,7 @@ In the following, your "computer" refers to as where you execute Docker (most Li
 
 ### Raspberry Pi
 
-- Setup the Raspberry Pi using a 64-bit image of Raspbian (I used the *2022-04-04-raspios-bullseye-arm64.img.xz* image) from the official Raspberry Pi homepage).
+- Setup the Raspberry Pi using a 32-bit image of Raspberry Pi OS.
 - Install the required software
 
 ```
@@ -39,8 +38,8 @@ Then,
 - Checkout this repository
 - Execute `./prepareSysroot.sh <RPI username> <RPI IP address>`
   This copies the Raspberry Pi's sysroot to your computer. Depending on your configuration, you may enter your RPi user's password three times.
-- Carefully look at the Dockerfile's "*PLEASE CUSTOMIZE THIS SECTION*" and edit it if necessary.
-- Execute `docker build --tag qtpi/qtpi:1.0 .`
+- Carefully look at the Dockerfile's "*PLEASE CUSTOMIZE THIS SECTION*" and edit it if necessary. Edit the modules and include only what you need, this will reduce the build time. Have in consideration that, in case you need specific modules, maybe you'll have to install aditional software to your raspberry (For example, I used MariaDB and had to install the mariadb packages)
+- Execute `docker build --tag qtpi/qtpi:1.0 .` (you may need to use `sudo`)
   This will generate a Docker image while compiling and cross-compiling Qt. Since most of the process is done here, it will take some time.
 - When the last step succeeded, you now have the complete environment ready for compiling Qt applications for your host / your computer as well as your Raspberry Pi.
 - At last, you should run a Docker container from the newly generated Docker image: `docker run -it --rm qtpi/qtpi:1.0`
@@ -49,10 +48,27 @@ Then,
 
 Inside the Docker container, the Qt host installation is located at **~/qt-host**, the Qt target installation at **~/qt-raspi** (see [1]).
 
-For compiling and executing sample applications on the host or target, see [2].
+## Cross-compiling your Qt project for the Raspberry Pi 3B+ with qmake (32-bit)
+
+I used qmake for the cross compilation, so I do not know exactly how to cross compile using cmake, but you should find information about it in [2] and [3]. 
+
+Once you generated the docker image and copied the Qt files to your raspberry pi, you can cross compile your Qt project. 
+ - First, you need to run a docker container from the Docker image you created before (in case you exit after copying Qt) with `docker run -it --rm qtpi/qtpi:1.0`
+ - Open other terminal tab, and find the container ID with `docker ps`
+ - Execute `docker cp /path/to/project container_id:/path/within/container` to copy your project to the docker container.
+ - Navigate to your project's directory inside the Docker container with `cd /path/in/container`
+ - Generate a Makefile for your Qt application. Use the `qmake` in `/qt-raspi/bin/`, this is the cross compiled version of `qmake`. Execute `/qt-raspi/bin/qmake your_project.pro`
+ - Compile your Qt application using `make`. If all goes well, this should create an executable file in the current directory that is compatible with the Raspberry Pi.
+ - Copy the compiled application back to your host machine executing `docker cp container_id:/path/in/container/build/executable /path/to/destination/on/host` (Execute in another terminal tab, outside docker container).
+ - Exit the docker container.
+ - Transfer the application to your Raspberry Pi with `scp /path/to/compiled/app pi@raspberry-pi-ip:/destination/path`
+
+If all goes well, you should have your app running in your raspberry pi 3B+.
 
 ## References
 
-[1] https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi
+[1] https://github.com/kevin-strobel/qt6pi3b
 
 [2] https://github.com/PhysicsX/QTonRaspberryPi/blob/main/README.md
+
+[3] https://wiki.qt.io/Cross-Compile_Qt_6_for_Raspberry_Pi
