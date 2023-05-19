@@ -12,9 +12,9 @@ FROM ubuntu:focal
 #######################################################################
 #                 PLEASE CUSTOMIZE THIS SECTION
 #######################################################################
-# The Qt version to build
+# The Qt version to build, it's important to select the correct one.
 ARG QT_VERSION=6.4.2
-# The Qt modules to build
+# The Qt modules to build. Add only the modules you need. I used needed to use the serial connections, so i added qtserialport.
 ARG QT_MODULES=qtbase,qtdeclarative,qtserialport
 # How many cores to use for parallel builds
 ARG PARALLELIZATION=8
@@ -42,7 +42,8 @@ RUN apt update && apt upgrade -y && DEBIAN_FRONTEND=noninteractive TZ="${TZ}" ap
 ####################################################################### 
 RUN useradd -m qtpi \
  && usermod -aG sudo qtpi \
- && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+ && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers 
+# This last command doesn't seem to work sometimes, as it asks for passwords with sudo commands, so I modified the file to avoid its use. 
 
 USER qtpi
 
@@ -105,6 +106,7 @@ RUN cd qthost-build \
 ###################
 COPY --chown=qtpi:qtpi toolchain.cmake /home/qtpi/toolchain.cmake
 
+# Here i added the flags for the mysql drivers. You can delete them if you don't need them.
 RUN cd qtpi-build \
  && ../qt6/configure -release -opengl es2 -nomake examples -nomake tests -qt-host-path $HOME/qt-host -extprefix $HOME/qt-raspi -prefix /usr/local/qt6 -device ${RPI_DEVICE} -device-option CROSS_COMPILE=arm-linux-gnueabihf- -sql-mysql MYSQL_INCDIR=/usr/include/mysql MYSQL_LIBDIR=/usr/lib/arm-linux-gnueabihf -- -DCMAKE_TOOLCHAIN_FILE=$HOME/toolchain.cmake -DQT_FEATURE_xcb=ON -DFEATURE_xcb_xlib=ON -DQT_FEATURE_xlib=ON \
  && cmake --build . --parallel ${PARALLELIZATION} \
