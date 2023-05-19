@@ -7,18 +7,12 @@ set(CMAKE_SYSTEM_PROCESSOR arm)
 set(TARGET_SYSROOT /home/qtpi/rpi-sysroot)
 set(CMAKE_SYSROOT ${TARGET_SYSROOT})
 
-#set(ENV{PKG_CONFIG_PATH} $PKG_CONFIG_PATH:/usr/lib/aarch64-linux-gnu/pkgconfig)
-#set(ENV{PKG_CONFIG_LIBDIR} /usr/lib/pkgconfig:/usr/share/pkgconfig/:${TARGET_SYSROOT}/usr/lib/aarch64-linux-gnu/pkgconfig:${TARGET_SYSROOT}/usr/lib/pkgconfig)
 set(ENV{PKG_CONFIG_PATH} $PKG_CONFIG_PATH:/usr/lib/arm-linux-gnueabihf/pkgconfig)
 set(ENV{PKG_CONFIG_LIBDIR} /usr/lib/pkgconfig:/usr/share/pkgconfig/:${TARGET_SYSROOT}/usr/lib/arm-linux-gnueabihf/pkgconfig:${TARGET_SYSROOT}/usr/lib/pkgconfig)
 set(ENV{PKG_CONFIG_SYSROOT_DIR} ${CMAKE_SYSROOT})
 
-#set(CMAKE_C_COMPILER /usr/bin/aarch64-linux-gnu-gcc-9)
-#set(CMAKE_CXX_COMPILER /usr/bin/aarch64-linux-gnu-g++-9)
-
 set(CMAKE_C_COMPILER /usr/bin/arm-linux-gnueabihf-gcc-9)
 set(CMAKE_CXX_COMPILER /usr/bin/arm-linux-gnueabihf-g++-9)
-
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${TARGET_SYSROOT}/usr/include")
 set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}")
@@ -34,7 +28,6 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 set(CMAKE_BUILD_RPATH ${TARGET_SYSROOT})
-
 
 include(CMakeInitializeConfigs)
 
@@ -62,33 +55,25 @@ endfunction()
 set(XCB_PATH_VARIABLE ${TARGET_SYSROOT})
 
 set(GL_INC_DIR ${TARGET_SYSROOT}/usr/include)
-#set(GL_LIB_DIR ${TARGET_SYSROOT}:${TARGET_SYSROOT}/usr/lib/aarch64-linux-gnu/:${TARGET_SYSROOT}/usr:${TARGET_SYSROOT}/usr/lib)
 set(GL_LIB_DIR ${TARGET_SYSROOT}:${TARGET_SYSROOT}/usr/lib/arm-linux-gnueabihf/:${TARGET_SYSROOT}/usr:${TARGET_SYSROOT}/usr/lib)
 
 set(EGL_INCLUDE_DIR ${GL_INC_DIR})
-#set(EGL_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/aarch64-linux-gnu/libEGL.so)
 set(EGL_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/arm-linux-gnueabihf/libEGL.so)
 
 set(OPENGL_INCLUDE_DIR ${GL_INC_DIR})
-#set(OPENGL_opengl_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/aarch64-linux-gnu/libOpenGL.so)
 set(OPENGL_opengl_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/arm-linux-gnueabihf/libOpenGL.so)
 
 set(GLESv2_INCLUDE_DIR ${GL_INC_DIR})
-#set(GLIB_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/aarch64-linux-gnu/libGLESv2.so)
 set(GLIB_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/arm-linux-gnueabihf/libGLESv2.so)
 
 set(GLESv2_INCLUDE_DIR ${GL_INC_DIR})
-#set(GLESv2_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/aarch64-linux-gnu/libGLESv2.so)
 set(GLESv2_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/arm-linux-gnueabihf/libGLESv2.so)
 
 set(gbm_INCLUDE_DIR ${GL_INC_DIR})
-#set(gbm_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/aarch64-linux-gnu/libgbm.so)
 set(gbm_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/arm-linux-gnueabihf/libgbm.so)
 
 set(Libdrm_INCLUDE_DIR ${GL_INC_DIR})
-#set(Libdrm_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/aarch64-linux-gnu/libdrm.so)
 set(Libdrm_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/arm-linux-gnueabihf/libdrm.so)
 
 set(XCB_XCB_INCLUDE_DIR ${GL_INC_DIR})
-#set(XCB_XCB_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/aarch64-linux-gnu/libxcb.so)
 set(XCB_XCB_LIBRARY ${XCB_PATH_VARIABLE}/usr/lib/arm-linux-gnueabihf/libxcb.so)
