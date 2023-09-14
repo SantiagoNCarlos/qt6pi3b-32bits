@@ -3,7 +3,7 @@
 ## Preface
 
 This is a guide for cross-compiling Qt 6 for Raspberry Pi 3B+ (32-bit OS). For a 64-bit cross compiling, check out [[1]](https://github.com/kevin-strobel/qt6pi3b).
-This is a direct modification of [[1]](https://github.com/kevin-strobel/qt6pi3b), done by @kevin-strobel. I've just made some modifications and after a few tries it works!
+This is a direct modification of [[1]](https://github.com/kevin-strobel/qt6pi3b), done by @kevin-strobel.
 At the bottom I include a few steps on how to cross compile your project easily in case you're using qmake.
 
 ## Build
@@ -63,7 +63,7 @@ Once you generated the docker image and copied the Qt files to your raspberry pi
  - Exit the docker container.
  - Transfer the application to your Raspberry Pi with `scp /path/to/compiled/app pi@raspberry-pi-ip:/destination/path`
 
-If all goes well, you should have your app running in your raspberry pi 3B+.
+If all goes well, you should have your app running in your Raspberry Pi 3B+.
 
 ## References
 
