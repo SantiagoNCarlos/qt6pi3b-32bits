@@ -15,7 +15,7 @@ RPI_USERNAME=$1
 RPI_IP_ADDR=$2
 
 mkdir -p rpi-sysroot
-rm -rf rpi-sysroot/*
+rm -rf rpi-sysroot/* # This line is optional. In case you lack any contents inside the rpi-sysroot folder, simply comment it.
 
 rsync -avz --rsync-path="sudo rsync" --delete ${RPI_USERNAME}@${RPI_IP_ADDR}:/lib rpi-sysroot
 rsync -avz --rsync-path="sudo rsync" --delete ${RPI_USERNAME}@${RPI_IP_ADDR}:/usr/include rpi-sysroot/usr
