@@ -37,7 +37,7 @@ Then,
 
 - Checkout this repository
 - Execute `./prepareSysroot.sh <RPI username> <RPI IP address>`
-  This copies the Raspberry Pi's sysroot to your computer. Depending on your configuration, you may enter your RPi user's password three times.
+  This copies the Raspberry Pi's sysroot to your computer. Depending on your configuration, you may enter your RPi user's password three times. You may get a 'permission denied' error. Fix it with `sudo chmod 700 prepareSysroot.sh`.
 - Carefully look at the Dockerfile's "*PLEASE CUSTOMIZE THIS SECTION*" and edit it if necessary. Edit the modules and include only what you need, this will reduce the build time. Have in consideration that, in case you need specific modules, maybe you'll have to install aditional software to your raspberry (For example, I used MariaDB and had to install the mariadb packages)
 - Execute `docker build --tag qtpi/qtpi:1.0 .` (you may need to use `sudo`)
   This will generate a Docker image while compiling and cross-compiling Qt. Since most of the process is done here, it will take some time.
